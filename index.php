@@ -12,7 +12,7 @@ function xml_pars($xmlfile)
 	
     foreach($array as $key => $value){
 	    if(!empty($value)){
-	        echo $key.'-'.$value.'<br>';
+	        echo $key.' - '.$value.'<br>';
 		} else {
 		    echo $key.':<br>';
 
@@ -79,7 +79,7 @@ function array_generator($num){
 
 function csv_transform($arr)
 {
-    var_dump($fp = fopen('file.csv', 'w'));
+    $fp = fopen('file.csv', 'w');
     $str = implode(';',$arr);
     fputcsv($fp, $arr,';', '"');
     fclose($fp);
@@ -104,24 +104,25 @@ function csv_transform($arr)
 $arr = array_generator(50);
 csv_transform($arr);
 echo '<br><br>';
+
 function site_reading($url,$json)
 {
     $data1 = json_decode($json, true);
-    foreach ($data1 as $keys =>$array) {
-        foreach ($array as $key => $val) {
+    $array = $data1['query'];
+
+       foreach ($array as $key => $val) {
             foreach ($val as $k => $v) {
                 echo 'номер страницы - '.$v['pageid'].'<br>';
                 echo 'название страницы - '.$v['title'];
             }
-        }
-    }
+       }
 }
-//}
+
 $url = 'https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json';
 $json = file_get_contents($url);
 if($json) {
     site_reading($url, $json);
 } else{
-    echo 'Нет соединения с интернетом';
+    echo 'Нет соединения с сайтом';
 }
 ?>
