@@ -15,14 +15,14 @@ function xml_pars($xmlfile)
 	        echo $key.'-'.$value.'<br>';
 		} else {
 		    echo $key.':<br>';
-            
+
 		}
 	}
    
 }
 $xmlfile = 'info.xml';
 xml_pars($xmlfile);
-
+echo '<br><br>';
 
 function json_transform($array)
 {
@@ -65,6 +65,8 @@ function json_transform($array)
 
 $array = array('lisa' => [10,11,33] ,'volk' => [20,12,33] ,'zajaz' => [30,12,20]);
 json_transform($array);
+echo '<br><br>';
+
 function array_generator($num){
     $i=0;
     while ($i<$num){
@@ -101,10 +103,7 @@ function csv_transform($arr)
 }
 $arr = array_generator(50);
 csv_transform($arr);
-
-
-
-
+echo '<br><br>';
 function site_reading($url,$json)
 {
     $data1 = json_decode($json, true);
@@ -120,5 +119,9 @@ function site_reading($url,$json)
 //}
 $url = 'https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json';
 $json = file_get_contents($url);
-site_reading($url,$json);
+if($json) {
+    site_reading($url, $json);
+} else{
+    echo 'Нет соединения с интернетом';
+}
 ?>
