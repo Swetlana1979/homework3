@@ -7,19 +7,20 @@ function xml_pars($xmlfile)
     xml_parse_into_struct($xmlparser, $xmldata, $values);
     $data = xml_parser_free($xmlparser);
     foreach ($values as $key => $val) {
-        $array[$val['tag']] = $val['value'] ;
+        $array[$val['tag']] = $val['value'];
     }
-	
-    foreach($array as $key => $value){
-	    if(!empty($value)){
-	        echo $key.' - '.$value.'<br>';
-		} else {
-		    echo $key.':<br>';
 
-		}
-	}
-   
+    foreach ($array as $key => $value) {
+        if (!empty($value)) {
+            echo $key . ' - ' . $value . '<br>';
+        } else {
+            echo $key . ':<br>';
+
+        }
+    }
+
 }
+
 $xmlfile = 'info.xml';
 xml_pars($xmlfile);
 echo '<br><br>';
@@ -63,14 +64,15 @@ function json_transform($array)
     }
 }
 
-$array = array('lisa' => [10,11,33] ,'volk' => [20,12,33] ,'zajaz' => [30,12,20]);
+$array = array('lisa' => [10, 11, 33], 'volk' => [20, 12, 33], 'zajaz' => [30, 12, 20]);
 json_transform($array);
 echo '<br><br>';
 
-function array_generator($num){
-    $i=0;
-    while ($i<$num){
-        $array[]= mt_rand(1,100);
+function array_generator($num)
+{
+    $i = 0;
+    while ($i < $num) {
+        $array[] = mt_rand(1, 100);
         $i++;
     }
     return $array;
@@ -80,8 +82,8 @@ function array_generator($num){
 function csv_transform($arr)
 {
     $fp = fopen('file.csv', 'w');
-    $str = implode(';',$arr);
-    fputcsv($fp, $arr,';', '"');
+    $str = implode(';', $arr);
+    fputcsv($fp, $arr, ';', '"');
     fclose($fp);
 
     if (($fp1 = fopen("file.csv", "r")) !== FALSE) {
@@ -90,7 +92,7 @@ function csv_transform($arr)
             foreach ($data as $value) {
                 $n = $value % 2;
                 if ($n === 0) {
-                   $sum[] = $value;
+                    $sum[] = $value;
                 }
             }
         }
@@ -101,28 +103,29 @@ function csv_transform($arr)
 
     }
 }
+
 $arr = array_generator(50);
 csv_transform($arr);
 echo '<br><br>';
 
-function site_reading($url,$json)
+function site_reading($url, $json)
 {
     $data1 = json_decode($json, true);
     $array = $data1['query'];
 
-       foreach ($array as $key => $val) {
-            foreach ($val as $k => $v) {
-                echo 'номер страницы - '.$v['pageid'].'<br>';
-                echo 'название страницы - '.$v['title'];
-            }
-       }
+    foreach ($array as $key => $val) {
+        foreach ($val as $k => $v) {
+            echo 'номер страницы - ' . $v['pageid'] . '<br>';
+            echo 'название страницы - ' . $v['title'];
+        }
+    }
 }
 
 $url = 'https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json';
 $json = file_get_contents($url);
-if($json) {
+if ($json) {
     site_reading($url, $json);
-} else{
+} else {
     echo 'Нет соединения с сайтом';
 }
 ?>
